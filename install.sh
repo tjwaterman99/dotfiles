@@ -41,5 +41,6 @@ chmod +x install_starship.sh
 ./install_starship.sh --yes
 echo 'eval "$(starship init zsh)"' >> ~/.zshrc
 
-# Set up a postgres db
+# Start postgres
+sudo service postgresql start
 # createdb $USER
