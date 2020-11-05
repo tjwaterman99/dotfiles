@@ -25,6 +25,8 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 # Install python 3.8.6 and pipx
 pyenv install 3.8.6
