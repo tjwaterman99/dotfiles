@@ -12,7 +12,8 @@ sudo apt-get install -y \
 echo 'alias pg="pgcli"' >> ~/.zshrc
 
 # Exports
-echo '\n# dotfiles env vars\n' >> ~/.zshrc
+echo '' >> ~/.zshrc
+echo '# dotfiles env vars' >> ~/.zshrc
 echo 'export PGUSER=dev' >> ~/.zshrc
 echo 'export PGHOST=127.0.0.1' >> ~/.zshrc
 echo 'export PGPORT=5432' >> ~/.zshrc
