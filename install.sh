@@ -6,20 +6,18 @@ sudo apt-get install -y \
     unzip \
     fontconfig \
     htop \
-    tree \
-    nginx \
-    awscli \
-    postgresql \
-    postgresql-contrib \
-    pgcli
-
-# Install awless
-# curl https://raw.githubusercontent.com/wallix/awless/master/getawless.sh | bash
-# tar -xzf awless-linux-386.tar.gz
-# sudo mv awless /usr/local/bin
+    tree
 
 # Aliases
 echo 'alias pg="pgcli"' >> ~/.zshrc
+
+# Exports
+echo '\n# dotfiles env vars\n' >> ~/.zshrc
+echo 'export PGUSER=dev' >> ~/.zshrc
+echo 'export PGHOST=127.0.0.1' >> ~/.zshrc
+echo 'export PGPORT=5432' >> ~/.zshrc
+echo 'export PGPASSWORD=dev' >> ~/.zshrc
+echo 'export PGDATABASE=dev' >> ~/.zshrc
 
 # Install pyenv
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -27,20 +25,29 @@ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
 
-# Install FireMono font. Note that these should be installed locally if you're
-# using VSCode's desktop app to use the CodeSpace
-# mkdir ~/.fonts
-# wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraMono.zip
-# unzip -o -d ~/.fonts FiraMono.zip
-# rm FiraMono.zip
-# fc-cache -fv
+# Install python 3.8.6 and pipx
+pyenv install 3.8.6
+pyenv global 3.8.6
+pip install --upgrade pip
+pip install pipx
+
+# Install various python scripts
+pipx install awscli
+pipx install pgcli
+pipx install csvkit
+
+# Services
+docker run \
+    --name postgres \
+    --detach \
+    --publish '5432:5432' \
+    -e 'POSTGRES_PASSWORD=dev' \
+    -e 'POSTGRES_USER=dev' \
+    -e 'POSTGRES_DB=dev' \
+    postgres:12
 
 # Install Starship prompt
 wget https://starship.rs/install.sh -O install_starship.sh
 chmod +x install_starship.sh
 ./install_starship.sh --yes
-echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-
-# Start postgres
-sudo service postgresql start
-# createdb $USER
+echo 'eval "$(starship init zsh)"' >> ~/.zshrc 
